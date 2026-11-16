@@ -11,7 +11,7 @@ WIP
   - Added "pit_status_text_alignment", "drive_through_status_text", "stop_go_status_text", "disqualify_status_text" and color options. Default status text "D" for drive through (red), "S" for stop go (red), "D" for disqualify (black).
 
 * Pedal Widget
-  - Added "enable_brake_sound", "brake_full_sound_file", "brake_release_sound_file", "brake_sound_volume", "brake_full_threshold", "brake_release_threshold" options. Plays a sound once when raw brake input reaches full travel, and another sound once when brake is released.
+  - Added "enable_brake_sound", "brake_full_sound_file", "brake_release_sound_file", "brake_sound_volume", "brake_full_threshold", "brake_release_threshold" options. Plays a sound once when raw brake input reaches full travel, and another sound once when brake is released. Built-in beep sounds are used if no sound file is set.
 
 2.53.0 (2026-11-06)
 -----------------------------

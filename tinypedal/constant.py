@@ -255,6 +255,7 @@ class FILE:
 
     # File path
     PATH_IMAGE = "images/"
+    PATH_SOUND = "sounds/"
     PATH_DOC = "docs/"
     PATH_THIRDPARTYLICENSES = "docs/licenses/"
 
@@ -312,6 +313,9 @@ class FILE:
     IMAGE_INSTRUMENT = f"{PATH_IMAGE}icon_instrument{EXT_PNG}"
     IMAGE_STEERING_WHEEL = f"{PATH_IMAGE}icon_steering_wheel{EXT_PNG}"
     IMAGE_WEATHER = f"{PATH_IMAGE}icon_weather{EXT_PNG}"
+    # Sound
+    SOUND_BRAKE_FULL = f"{PATH_SOUND}brake_full{EXT_WAV}"
+    SOUND_BRAKE_RELEASE = f"{PATH_SOUND}brake_release{EXT_WAV}"
 
     # Stats file
     STATS_DRIVER = f"driver{EXT_STATS}"

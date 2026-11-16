@@ -3423,7 +3423,7 @@ Show filtered pedal input if available. Note, some vehicles may not provide filt
 Enable sound playback based on raw brake input. A sound plays once when brake reaches full (100%) travel, and another sound plays once when brake is released back to zero after any brake application. This option is disabled by default.
 
     brake_full_sound_file, brake_release_sound_file
-Set full path of `WAV` sound file to play when brake reaches full travel, or when brake is released. Double-click on the edit box to select sound file. Leave empty to disable corresponding sound.
+Set full path of `WAV` sound file to play when brake reaches full travel, or when brake is released. Double-click on the edit box to select sound file. Leave empty to use built-in beep sound (high pitch for full, low pitch for release).
 
     brake_sound_volume
 Set brake sound playback volume, value range in `0` to `100`.
