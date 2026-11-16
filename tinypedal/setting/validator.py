@@ -185,6 +185,7 @@ class ValueValidator:
             rxp.CFG_HEATMAP,
             rxp.CFG_USER_PATH,
             rxp.CFG_USER_IMAGE,
+            rxp.CFG_USER_SOUND,
             rxp.CFG_STRING,
         ):
             if re.search(strings, key):

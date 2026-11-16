@@ -329,3 +329,30 @@ class ImagePathEdit(BaseLineEdit):
         if image_exists(path_selected):
             self.setText(path_selected)
             self.init_value = path_selected
+
+
+class SoundPathEdit(BaseLineEdit):
+    """Sound path option edit with double click dialog trigger"""
+
+    def __init__(self, parent, init: str):
+        super().__init__(parent)
+        self.init_value = init
+
+    def mouseDoubleClickEvent(self, event):
+        """Double click to open dialog"""
+        if event.buttons() == Qt.LeftButton:
+            self.open_dialog_sound()
+
+    def validate(self):
+        """Validate & export value, returns None if invalid"""
+        value = self.text()
+        if value and not os.path.isfile(value):
+            return None
+        return value
+
+    def open_dialog_sound(self):
+        """Open sound file path dialog"""
+        path_selected = QFileDialog.getOpenFileName(self, dir=self.init_value, filter=FILE.FILTER_WAV)[0]
+        if os.path.isfile(path_selected):
+            self.setText(path_selected)
+            self.init_value = path_selected
