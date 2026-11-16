@@ -272,6 +272,8 @@ class FILE:
     EXT_SVG = ".svg"
     EXT_PNG = ".png"
     EXT_ICO = ".ico"
+    # Audio
+    EXT_WAV = ".wav"
     # Specific
     EXT_CONSUMPTION = ".consumption"
     EXT_ENERGY = ".energy"
@@ -294,6 +296,8 @@ class FILE:
     # Image
     FILTER_SVG = qfile_filter(EXT_SVG, "SVG image")
     FILTER_PNG = qfile_filter(EXT_PNG, "PNG image")
+    # Audio
+    FILTER_WAV = qfile_filter(EXT_WAV, "WAV audio")
     # Specific
     FILTER_CONSUMPTION = qfile_filter(EXT_CONSUMPTION, "Consumption History")
     FILTER_GPLINI = qfile_filter(EXT_INI, "GPL Pace Notes")

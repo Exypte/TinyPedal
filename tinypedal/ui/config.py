@@ -68,6 +68,7 @@ from ._option import (
     ImagePathEdit,
     IntegerEdit,
     OptionGroup,
+    SoundPathEdit,
     StringEdit,
 )
 from .display_order import DisplayOrder
@@ -453,6 +454,10 @@ class UserConfig(BaseDialog):
             if re.search(rxp.CFG_USER_IMAGE, key):
                 self._add_option_image(row_index, key, layout)
                 continue
+            # User sound file path string
+            if re.search(rxp.CFG_USER_SOUND, key):
+                self._add_option_sound(row_index, key, layout)
+                continue
             # Font name string
             if re.search(rxp.CFG_FONT_NAME, key):
                 self._add_option_combolist(row_index, key, layout, get_font_list())
@@ -528,6 +533,15 @@ class UserConfig(BaseDialog):
     def _add_option_image(self, row_index: int, key: str, layout: QGridLayout):
         """Image file path string"""
         editor = ImagePathEdit(self, self.user_setting[self.key_name][key])
+        # Load selected option
+        editor.setText(self.user_setting[self.key_name][key])
+        editor.set_default(self.default_setting[self.key_name][key])
+        # Add layout
+        self._set_option_layout(editor, row_index, key, layout)
+
+    def _add_option_sound(self, row_index: int, key: str, layout: QGridLayout):
+        """Sound file path string"""
+        editor = SoundPathEdit(self, self.user_setting[self.key_name][key])
         # Load selected option
         editor.setText(self.user_setting[self.key_name][key])
         editor.set_default(self.default_setting[self.key_name][key])

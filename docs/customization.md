@@ -3419,6 +3419,18 @@ Show Force Feedback meter.
     show_*_filtered
 Show filtered pedal input if available. Note, some vehicles may not provide filtered pedal input value, which the value will be zero. Disable this option to show raw input only.
 
+    enable_brake_sound
+Enable sound playback based on raw brake input. A sound plays once when brake reaches full (100%) travel, and another sound plays once when brake is released back to zero after any brake application. This option is disabled by default.
+
+    brake_full_sound_file, brake_release_sound_file
+Set full path of `WAV` sound file to play when brake reaches full travel, or when brake is released. Double-click on the edit box to select sound file. Leave empty to disable corresponding sound.
+
+    brake_sound_volume
+Set brake sound playback volume, value range in `0` to `100`.
+
+    brake_full_threshold, brake_release_threshold
+Set raw brake input threshold (fraction) that counts as full travel or released. Default is `0.99` for full, and `0.01` for released. Sound will not repeat until brake input moves `0.05` away from threshold.
+
 [**`Back to Top`**](#)
 
 

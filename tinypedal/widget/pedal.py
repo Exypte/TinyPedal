@@ -20,9 +20,16 @@
 Pedal Widget
 """
 
+import os
+
+from PySide2.QtCore import QUrl
+from PySide2.QtMultimedia import QMediaPlayer
+
 from .. import api
 from ._base import Overlay
 from ._painter import HorizontalPedalInputBar, VerticalPedalInputBar
+
+SOUND_HYSTERESIS = 0.05  # brake fraction margin to re-arm sound
 
 
 class Realtime(Overlay):
@@ -119,11 +126,20 @@ class Realtime(Overlay):
                 default=1,
             )
 
+        # Brake sound
+        if self.wcfg["enable_brake_sound"]:
+            self.sound_brake_full = self.create_sound_player(self.wcfg["brake_full_sound_file"])
+            self.sound_brake_release = self.create_sound_player(self.wcfg["brake_release_sound_file"])
+
         # Last data
         self.max_brake_pres = 0.01
+        self.brake_at_full = False
+        self.brake_pressed = False
 
     def post_update(self):
         self.max_brake_pres = 0.01
+        self.brake_at_full = False
+        self.brake_pressed = False
 
     def timerEvent(self, event):
         """Update when vehicle on track"""
@@ -148,6 +164,10 @@ class Realtime(Overlay):
             else:
                 brake = raw_brake + raw_brake
             self.update_pedal(self.bar_brake, brake, raw_brake)
+
+        # Brake sound
+        if self.wcfg["enable_brake_sound"]:
+            self.update_brake_sound(api.read.inputs.brake_raw())
 
         # Clutch
         if self.wcfg["show_clutch"]:
@@ -176,7 +196,50 @@ class Realtime(Overlay):
             target.last = data
             target.update_input(data, data)
 
+    def update_brake_sound(self, raw_brake):
+        """Brake sound update, play once on reaching full & on release"""
+        full_threshold = self.wcfg["brake_full_threshold"]
+        release_threshold = self.wcfg["brake_release_threshold"]
+        # Full brake
+        if raw_brake >= full_threshold:
+            if not self.brake_at_full:
+                self.brake_at_full = True
+                self.play_sound(self.sound_brake_full)
+        elif raw_brake < full_threshold - SOUND_HYSTERESIS:
+            self.brake_at_full = False
+        # Release brake
+        if raw_brake > release_threshold + SOUND_HYSTERESIS:
+            self.brake_pressed = True
+        elif raw_brake <= release_threshold and self.brake_pressed:
+            self.brake_pressed = False
+            self.play_sound(self.sound_brake_release)
+
     # Additional methods
+    def create_sound_player(self, file_path):
+        """Create sound player, returns None if file not found"""
+        if not os.path.isfile(file_path):
+            return None
+        player = QMediaPlayer(self)
+        source_url = QUrl.fromLocalFile(file_path)
+        if os.getenv("PYSIDE_OVERRIDE") == "6":
+            from PySide6.QtMultimedia import QAudioOutput
+
+            audio_device = QAudioOutput(player)
+            audio_device.setVolume(self.wcfg["brake_sound_volume"] / 100)  # qt6 (0.0 - 1.0)
+            player.setAudioOutput(audio_device)
+            player.setSource(source_url)
+        else:
+            player.setVolume(self.wcfg["brake_sound_volume"])  # qt5 (0 - 100)
+            player.setMedia(source_url)
+        return player
+
+    @staticmethod
+    def play_sound(player):
+        """Play sound from start"""
+        if player is not None:
+            player.stop()
+            player.play()
+
     def filtered_brake_pressure(self, value):
         """Percentage filtered brake pressure"""
         brake_pres = sum(value)
