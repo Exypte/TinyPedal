@@ -26,6 +26,7 @@ from PySide2.QtCore import QUrl
 from PySide2.QtMultimedia import QMediaPlayer
 
 from .. import api
+from ..constant import FILE
 from ._base import Overlay
 from ._painter import HorizontalPedalInputBar, VerticalPedalInputBar
 
@@ -128,8 +129,10 @@ class Realtime(Overlay):
 
         # Brake sound
         if self.wcfg["enable_brake_sound"]:
-            self.sound_brake_full = self.create_sound_player(self.wcfg["brake_full_sound_file"])
-            self.sound_brake_release = self.create_sound_player(self.wcfg["brake_release_sound_file"])
+            self.sound_brake_full = self.create_sound_player(
+                self.wcfg["brake_full_sound_file"] or FILE.SOUND_BRAKE_FULL)
+            self.sound_brake_release = self.create_sound_player(
+                self.wcfg["brake_release_sound_file"] or FILE.SOUND_BRAKE_RELEASE)
 
         # Last data
         self.max_brake_pres = 0.01
@@ -220,7 +223,7 @@ class Realtime(Overlay):
         if not os.path.isfile(file_path):
             return None
         player = QMediaPlayer(self)
-        source_url = QUrl.fromLocalFile(file_path)
+        source_url = QUrl.fromLocalFile(os.path.abspath(file_path))
         if os.getenv("PYSIDE_OVERRIDE") == "6":
             from PySide6.QtMultimedia import QAudioOutput
 

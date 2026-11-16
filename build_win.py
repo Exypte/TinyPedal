@@ -213,6 +213,10 @@ def build_exe_pyside2(dist_path: str) -> None:
         FILE.IMAGE_WEATHER,
         FILE.IMAGE_TINYPEDAL,
     ]
+    SOUND_FILES = [
+        FILE.SOUND_BRAKE_FULL,
+        FILE.SOUND_BRAKE_RELEASE,
+    ]
     DOCUMENT_FILES = [
         FILE.DOC_CHANGELOG,
         FILE.DOC_USERGUIDE,
@@ -230,6 +234,7 @@ def build_exe_pyside2(dist_path: str) -> None:
         (FILE.PATH_DOC, DOCUMENT_FILES),
         (FILE.PATH_THIRDPARTYLICENSES, glob(f"{FILE.PATH_THIRDPARTYLICENSES}*")),
         (FILE.PATH_IMAGE, IMAGE_FILES),
+        (FILE.PATH_SOUND, SOUND_FILES),
         ("platforms", QT_PLATFORMS),
         ("mediaservice", QT_MEDIASERVICE),
     ]
@@ -322,6 +327,10 @@ def build_exe_pyside6(dist_path: str) -> None:
         FILE.IMAGE_WEATHER,
         FILE.IMAGE_TINYPEDAL,
     ]
+    SOUND_FILES = [
+        FILE.SOUND_BRAKE_FULL,
+        FILE.SOUND_BRAKE_RELEASE,
+    ]
     DOCUMENT_FILES = [
         FILE.DOC_CHANGELOG,
         FILE.DOC_USERGUIDE,
@@ -339,6 +348,7 @@ def build_exe_pyside6(dist_path: str) -> None:
         (FILE.PATH_DOC, DOCUMENT_FILES),
         (FILE.PATH_THIRDPARTYLICENSES, glob(f"{FILE.PATH_THIRDPARTYLICENSES}*")),
         (FILE.PATH_IMAGE, IMAGE_FILES),
+        (FILE.PATH_SOUND, SOUND_FILES),
         ("platforms", QT_PLATFORMS),
         ("multimedia", QT_MULTIMEDIA),
     ]
